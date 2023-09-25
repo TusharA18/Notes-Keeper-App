@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/account/accountSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
    const user = useSelector(selectUser);
@@ -9,31 +9,33 @@ const Navbar = () => {
 
    return (
       <div className="container fixed py-3 backdrop-filter backdrop-blur-2xl flex items-center justify-between h-16 shadow-lg">
-         <div className="flex items-center justify-center space-x-2">
-            <img className="w-8 rounded-xl" src="/images/logo.jpg" alt="" />
-            <h1 className="font-semibold text-md md: text-lg xl:text-2xl">
-               Notes Keeper
-            </h1>
-         </div>
+         <Link to="/">
+            <div className="flex items-center justify-center space-x-2">
+               <img className="w-8 rounded-xl" src="/images/logo.jpg" alt="" />
+               <h1 className="font-semibold text-md md: text-lg xl:text-2xl">
+                  Notes Keeper
+               </h1>
+            </div>
+         </Link>
          <div className="flex items-center justify-center space-x-3">
             {user == null ? (
                <>
                   <button
                      onClick={() => navigate("/login")}
-                     className="px-3 py-2 rounded-2xl transition-all text-white  bg-[#009c8d] hover:bg-white hover:text-[#009c8d] hover:underline hover:underline-offset-2 font-semibold"
+                     className="px-3 py-2 rounded-2xl transition-all text-white bg-[#009c8d] hover:bg-white hover:text-[#009c8d] hover:underline hover:underline-offset-2 font-semibold"
                   >
                      Login
                   </button>
                   <button
                      onClick={() => navigate("/register")}
-                     className="text-white bg-[#009c84] hover:bg-white hover:text-[#009c8d]  hover:underline hover:underline-offset-2 transition-all px-3 py-2 rounded-2xl font-semibold"
+                     className="text-white bg-[#009c84] hover:bg-white hover:text-[#009c8d] hover:underline hover:underline-offset-2 transition-all px-3 py-2 rounded-2xl font-semibold"
                   >
                      Register
                   </button>
                </>
             ) : (
                <>
-                  <button className="bg-blue-100 mr-2 hover:bg-blue-300 transition-all px-3 py-2 rounded-2xl">
+                  <button className="text-white bg-[#009c84] hover:bg-white hover:text-[#009c8d] hover:underline hover:underline-offset-2 transition-all px-3 py-2 rounded-2xl">
                      Sign out
                   </button>
                   <div className="relative group">

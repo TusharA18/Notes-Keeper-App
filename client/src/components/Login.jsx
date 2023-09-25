@@ -1,12 +1,13 @@
 import { GoogleLogin } from "@react-oauth/google";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { Link } from "react-router-dom";
 
 const Login = () => {
    return (
       <div className="h-screen">
          <Navbar />
-         <div className="container pt-20 flex items-center justify-center lg:justify-between w-full h-full">
+         <div className="container flex items-center justify-center lg:justify-between w-full h-full">
             <div className="hidden lg:block">
                <img src="/images/login-page.avif" alt="" />
             </div>
@@ -21,6 +22,7 @@ const Login = () => {
                      <input
                         className="w-full border border-gray-200 px-3 py-2 rounded-2xl focus:outline-[#4dd1bd]"
                         type="email"
+                        name="email"
                         placeholder="Enter you Email"
                         required
                      />
@@ -31,6 +33,7 @@ const Login = () => {
                      <input
                         className="w-full border border-gray-200 px-3 py-2 rounded-2xl focus:outline-[#4dd1bd]"
                         type="password"
+                        name="password"
                         placeholder="Enter your Password"
                         required
                      />
@@ -38,6 +41,15 @@ const Login = () => {
 
                   <p className="w-fit ml-auto text-sm text-[#009c8d] hover:underline hover:underline-offset-2 cursor-pointer">
                      Forgot Password?
+                  </p>
+
+                  <p className="w-fit mr-auto text-sm text-black">
+                     {"Doesn't"} have an account?{" "}
+                     <Link to="/register">
+                        <span className="text-[#009c8d] hover:underline hover:underline-offset-2 cursor-pointer">
+                           Register
+                        </span>
+                     </Link>
                   </p>
 
                   <button className="bg-[#009c84] px-3 py-2 rounded-2xl w-full text-white font-semibold">
