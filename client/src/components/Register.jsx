@@ -28,7 +28,12 @@ const convertToBase64 = (file) => {
 };
 
 const Login = () => {
-   const [cred, setCred] = useState({ name: "", email: "", password: "" });
+   const [cred, setCred] = useState({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+   });
    const [photo, setPhoto] = useState({ myFile: "" });
 
    const { loading, setLoading } = useContext(LoaderContext);
@@ -57,12 +62,20 @@ const Login = () => {
       setPhoto((prev) => ({ ...prev, myFile: base64 }));
    };
 
-   const handleRegisterError = (data) => {
+   const handleError = (data) => {
       data.map((error) => toast(error.msg, { type: "error" }));
    };
 
    const handleSubmit = async (e) => {
       e.preventDefault();
+
+      if (cred.password !== cred.confirmPassword) {
+         toast("Password and Confirm Password should match", {
+            type: "error",
+         });
+
+         return;
+      }
 
       setLoading(true);
 
@@ -76,7 +89,7 @@ const Login = () => {
       setLoading(false);
 
       if (!data.success) {
-         handleRegisterError(data.errors);
+         handleError(data.errors);
 
          return;
       }
@@ -104,7 +117,7 @@ const Login = () => {
       const data = await googleAuth(payload);
 
       if (!data.success) {
-         handleRegisterError(data.errors);
+         handleError(data.errors);
 
          return;
       }
@@ -122,18 +135,18 @@ const Login = () => {
    return (
       <div className="h-screen">
          <Navbar />
-         <div className="container flex items-center justify-center lg:justify-between w-fit h-full">
+         <div className="container flex items-center justify-center lg:justify-between w-fit min-h-screen">
             <div className="hidden lg:block">
                <img src="/images/register-page.avif" alt="" />
             </div>
-            <div className="md:px-20 py-10 space-y-6">
+            <div className="md:px-20 pt-9 space-y-5">
                <div className="space-y-3">
-                  <h1 className="text-4xl font-semibold">Welcome!</h1>
-                  <p className="text-[16px]">
+                  <h1 className="text-3xl font-bold">Welcome!</h1>
+                  <p className="text-[15px]">
                      Please enter your credentials to continue...
                   </p>
                </div>
-               <form className="space-y-3 w-80" onSubmit={handleSubmit}>
+               <form className="space-y-2 w-80 text-sm" onSubmit={handleSubmit}>
                   <div className="space-y-1">
                      <label className="ml-1">Name</label>
                      <input
@@ -176,6 +189,19 @@ const Login = () => {
                   </div>
 
                   <div className="space-y-1">
+                     <label className="ml-1">Confirm Password</label>
+                     <input
+                        className="w-full border border-gray-200 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
+                        type="password"
+                        name="confirmPassword"
+                        value={cred.confirmPassword}
+                        onChange={handleChange}
+                        placeholder="Enter your Password"
+                        minLength={8}
+                     />
+                  </div>
+
+                  <div className="space-y-1">
                      <label className="ml-1">Picture</label>
                      <input
                         className="w-full border border-gray-200 rounded-lg p-1"
@@ -185,7 +211,7 @@ const Login = () => {
                      />
                   </div>
 
-                  <button className="bg-[#009c84] hover:bg-[#42aa9b] transition-all px-3 py-2 h-12 rounded-2xl w-full text-white font-semibold text-lg">
+                  <button className="bg-[#009c84] hover:bg-[#42aa9b] transition-all px-3 py-2 h-11 rounded-2xl w-full text-white font-semibold text-lg">
                      {loading ? <Loader /> : "Register"}
                   </button>
 

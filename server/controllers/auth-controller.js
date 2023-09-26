@@ -1,16 +1,14 @@
 import { validationResult } from "express-validator";
 import User from "../models/User.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
    const errors = validationResult(req);
 
-   let success = false;
-
    if (!errors.isEmpty()) {
       return res.status(200).json({
-         success,
+         success: false,
          errors: errors.array(),
       });
    }
@@ -36,7 +34,6 @@ export const registerUser = async (req, res) => {
          user: {
             name: newUser.name,
             email: newUser.email,
-            date: newUser.date,
             photo: newUser.photo,
          },
          success: true,
@@ -54,11 +51,9 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
    const errors = validationResult(req);
 
-   let success = false;
-
    if (!errors.isEmpty()) {
       return res.status(200).json({
-         success,
+         success: false,
          errors: errors.array(),
       });
    }
@@ -91,7 +86,6 @@ export const loginUser = async (req, res) => {
          user: {
             name: user.name,
             email: user.email,
-            date: user.date,
             photo: user.photo,
          },
          success: true,
@@ -106,14 +100,12 @@ export const loginUser = async (req, res) => {
    }
 };
 
-export const googleAuth = async (req, res) => {
+export const googleAuthUser = async (req, res) => {
    const errors = validationResult(req);
-
-   let success = false;
 
    if (!errors.isEmpty()) {
       return res.status(200).json({
-         success,
+         success: false,
          errors: errors.array(),
       });
    }
@@ -129,11 +121,10 @@ export const googleAuth = async (req, res) => {
          token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
          return res.status(200).json({
-            msg: "User login successfully",
+            msg: "User logged in successfully",
             user: {
                name: user.name,
                email: user.email,
-               date: user.date,
                photo: user.photo,
             },
             success: true,
@@ -157,11 +148,103 @@ export const googleAuth = async (req, res) => {
          user: {
             name: newUser.name,
             email: newUser.email,
-            date: newUser.date,
             photo: newUser.photo,
          },
          success: true,
          token,
+      });
+   } catch (error) {
+      return res.status(500).json({
+         msg: "Internal server error!",
+         error: error.message,
+         success: false,
+      });
+   }
+};
+
+export const updateUser = async (req, res) => {
+   try {
+      const { name, currentPassword, newPassword, photo } = req.body.user;
+
+      const id = req.user.id;
+
+      const user = await User.findById(id);
+
+      if (!user) {
+         return res.status(200).json({
+            errors: [{ msg: "No user available with these credentials" }],
+            success: false,
+         });
+      }
+
+      let newData = {};
+
+      newData.updatedAt = Date.now();
+
+      if (name) {
+         newData.name = name;
+      }
+
+      if (photo) {
+         newData.photo = photo;
+      }
+
+      if (currentPassword) {
+         if (user.sub) {
+            return res.status(200).json({
+               errors: [
+                  {
+                     msg: "The password can't be updated as you logged in or registered through Google",
+                  },
+               ],
+               success: false,
+            });
+         }
+
+         const match = await bcrypt.compare(currentPassword, user.password);
+
+         if (!match) {
+            return res.status(200).json({
+               errors: [{ msg: "Password doesn't matched" }],
+               success: false,
+            });
+         }
+
+         let pattern = new RegExp(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"
+         );
+
+         if (
+            !newPassword ||
+            newPassword.length < 8 ||
+            !pattern.test(newPassword)
+         ) {
+            return res.status(200).json({
+               errors: [{ msg: "Password doesn't follow the valid criteria" }],
+               success: false,
+            });
+         }
+
+         const hashPassword = await bcrypt.hash(newPassword, 10);
+
+         newData.password = hashPassword;
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(
+         { _id: id },
+         { $set: newData },
+         { new: true }
+      );
+
+      return res.status(200).json({
+         msg: "User updated successfully",
+         user: {
+            name: updatedUser.name,
+            email: updatedUser.email,
+            photo: updatedUser.photo,
+            password: updatedUser.password,
+         },
+         success: true,
       });
    } catch (error) {
       return res.status(500).json({

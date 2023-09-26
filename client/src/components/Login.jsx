@@ -2,7 +2,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import Loader from "./Loader";
 import { LoaderContext } from "../context/LoaderContextProvider";
@@ -20,13 +20,19 @@ const Login = () => {
 
    const navigate = useNavigate();
 
+   useEffect(() => {
+      if (sessionStorage.getItem("auth-token")) {
+         navigate("/");
+      }
+   }, [navigate]);
+
    const handleChange = (e) => {
       const { name, value } = e.target;
 
       setCred((prev) => ({ ...prev, [name]: value }));
    };
 
-   const handleRegisterError = (data) => {
+   const handleError = (data) => {
       data.map((error) => toast(error.msg, { type: "error" }));
    };
 
@@ -43,7 +49,7 @@ const Login = () => {
       setLoading(false);
 
       if (!data.success) {
-         handleRegisterError(data.errors);
+         handleError(data.errors);
 
          return;
       }
@@ -71,7 +77,7 @@ const Login = () => {
       const data = await googleAuth(payload);
 
       if (!data.success) {
-         handleRegisterError(data.errors);
+         handleError(data.errors);
 
          return;
       }
@@ -89,7 +95,7 @@ const Login = () => {
    return (
       <div className="h-screen">
          <Navbar />
-         <div className="container flex items-center justify-center lg:justify-between w-full h-full">
+         <div className="container flex items-center justify-center lg:justify-between w-full min-h-screen">
             <div className="hidden lg:block">
                <img src="/images/login-page.avif" alt="" />
             </div>

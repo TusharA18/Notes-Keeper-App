@@ -1,16 +1,18 @@
 import express from "express";
 import {
-   googleAuth,
+   googleAuthUser,
    loginUser,
    registerUser,
+   updateUser,
 } from "../controllers/auth-controller.js";
 import { body } from "express-validator";
 import User from "../models/User.js";
+import { verifyToken } from "../middleware/auth-middleware.js";
 
 const router = express.Router();
 
 router.post(
-   "/register",
+   "/registerUser",
    [
       body("name").notEmpty().withMessage("Name cannot be empty"),
       body("email")
@@ -32,13 +34,13 @@ router.post(
             minUppercase: 1,
             minNumbers: 1,
          })
-         .withMessage("Password is not valid"),
+         .withMessage("Password doesn't follow the valid criteria"),
    ],
    registerUser
 );
 
 router.post(
-   "/login",
+   "/loginUser",
    [
       body("email")
          .notEmpty()
@@ -51,7 +53,7 @@ router.post(
 );
 
 router.post(
-   "/googleAuth",
+   "/googleAuthUser",
    [
       body("name").notEmpty().withMessage("Name cannot be empty"),
       body("email")
@@ -61,7 +63,9 @@ router.post(
          .withMessage("Email is not valid"),
       body("sub").notEmpty().withMessage("Credentials invalid"),
    ],
-   googleAuth
+   googleAuthUser
 );
+
+router.post("/updateUser", verifyToken, updateUser);
 
 export default router;

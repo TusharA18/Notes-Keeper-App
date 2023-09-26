@@ -4,7 +4,7 @@ const url = import.meta.env.VITE_SERVER_URL;
 
 export const registerUser = async (data) => {
    try {
-      const response = await axios.post(`${url}/api/auth/register`, data);
+      const response = await axios.post(`${url}/api/auth/registerUser`, data);
 
       return response.data;
    } catch (error) {
@@ -14,7 +14,7 @@ export const registerUser = async (data) => {
 
 export const loginUser = async (data) => {
    try {
-      const response = await axios.post(`${url}/api/auth/login`, data);
+      const response = await axios.post(`${url}/api/auth/loginUser`, data);
 
       return response.data;
    } catch (error) {
@@ -24,7 +24,17 @@ export const loginUser = async (data) => {
 
 export const googleAuth = async (data) => {
    try {
-      const response = await axios.post(`${url}/api/auth/googleAuth`, data);
+      const response = await axios.post(`${url}/api/auth/googleAuthUser`, data);
+
+      return response.data;
+   } catch (error) {
+      console.log("Error in googleAuth API", error);
+   }
+};
+
+export const updateUser = async (data) => {
+   try {
+      const response = await axios.post(`${url}/api/auth/updateUser`, data);
 
       return response.data;
    } catch (error) {
