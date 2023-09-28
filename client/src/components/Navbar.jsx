@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../features/account/accountSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
    const user = useSelector(selectUser);
@@ -14,11 +15,13 @@ const Navbar = () => {
 
       sessionStorage.removeItem("auth-token");
 
+      toast("Signed out successfully", { type: "success" });
+
       navigate("/login");
    };
 
    return (
-      <div className="container fixed py-3 backdrop-filter backdrop-blur-2xl flex items-center justify-between h-14 shadow-lg">
+      <div className="container fixed py-3 z-10 backdrop-filter backdrop-blur-2xl flex items-center justify-between h-14 shadow-lg">
          <Link to="/">
             <div className="flex items-center justify-center space-x-2">
                <img className="w-8 rounded-xl" src="/images/logo.jpg" alt="" />

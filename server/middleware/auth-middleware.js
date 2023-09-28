@@ -5,9 +5,10 @@ export const verifyToken = (req, res, next) => {
       const token = req.body.token;
 
       if (!token) {
-         return res.status(500).json({
-            msg: "Auth token required!",
-            error: error.message,
+         return res.status(200).json({
+            errors: [
+               { msg: "Something went wrong, please refresh or login again!" },
+            ],
             success: false,
          });
       }

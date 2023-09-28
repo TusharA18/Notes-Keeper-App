@@ -150,7 +150,7 @@ const Login = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Name</label>
                      <input
-                        className="w-full border border-gray-200 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
+                        className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
                         type="text"
                         name="name"
                         value={cred.name}
@@ -162,7 +162,7 @@ const Login = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Email</label>
                      <input
-                        className="w-full border border-gray-200 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
+                        className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
                         type="email"
                         name="email"
                         value={cred.email}
@@ -174,7 +174,7 @@ const Login = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Password</label>
                      <input
-                        className="w-full border border-gray-200 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
+                        className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
                         type="password"
                         name="password"
                         value={cred.password}
@@ -191,7 +191,7 @@ const Login = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Confirm Password</label>
                      <input
-                        className="w-full border border-gray-200 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
+                        className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
                         type="password"
                         name="confirmPassword"
                         value={cred.confirmPassword}
@@ -204,15 +204,19 @@ const Login = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Picture</label>
                      <input
-                        className="w-full border border-gray-200 rounded-lg p-1"
+                        className="w-full border border-gray-300 rounded-lg p-1"
                         type="file"
                         name="photo"
                         onChange={handlePhotoUpload}
                      />
                   </div>
 
-                  <button className="bg-[#009c84] hover:bg-[#42aa9b] transition-all px-3 py-2 h-11 rounded-2xl w-full text-white font-semibold text-lg">
-                     {loading ? <Loader /> : "Register"}
+                  <button className="bg-[#009c84] hover:bg-white hover:text-[#42aa9b] hover:outline hover:outline-2 transition-all px-3 py-2 h-11 rounded-2xl w-full text-white font-semibold text-lg group">
+                     {loading ? (
+                        <Loader addClass="group-hover:border-[#009c84] group-hover:border-b-transparent" />
+                     ) : (
+                        "Register"
+                     )}
                   </button>
 
                   <p className="w-fit mx-auto text-sm text-black">

@@ -237,7 +237,7 @@ export const updateUser = async (req, res) => {
       );
 
       return res.status(200).json({
-         msg: "User updated successfully",
+         msg: "User profile updated successfully",
          user: {
             name: updatedUser.name,
             email: updatedUser.email,

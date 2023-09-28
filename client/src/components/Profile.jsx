@@ -109,9 +109,15 @@ const Profile = () => {
       setCred((prev) => ({
          ...prev,
          name: data.user.name,
+         currentPassword: "",
+         newPassword: "",
       }));
 
       setPhoto((prev) => ({ ...prev, myFile: data.user.photo }));
+
+      const fileInput = document.querySelector(".fileInput");
+
+      fileInput.value = "";
 
       setFlag(true);
    };
@@ -200,7 +206,7 @@ const Profile = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Picture</label>
                      <input
-                        className="w-full border border-gray-200 rounded-lg p-1"
+                        className="fileInput w-full border border-gray-200 rounded-lg p-1"
                         type="file"
                         name="photo"
                         onChange={handlePhotoUpload}
@@ -211,10 +217,14 @@ const Profile = () => {
                      className={`${
                         flag
                            ? "bg-[#42aa9b]"
-                           : "bg-[#009c84] hover:bg-[#42aa9b]"
-                     } transition-all px-3 py-2 h-12 rounded-2xl w-full text-white font-semibold text-lg`}
+                           : "bg-[#009c84] hover:bg-white hover:text-[#009c84] hover:outline hover:outline-2"
+                     } group transition-all px-3 py-2 h-12 rounded-2xl w-full text-white font-semibold text-lg`}
                   >
-                     {loading ? <Loader /> : "Update"}
+                     {loading ? (
+                        <Loader addClass="group-hover:border-[#009c84] group-hover:border-b-transparent" />
+                     ) : (
+                        "Update"
+                     )}
                   </button>
                </form>
             </div>

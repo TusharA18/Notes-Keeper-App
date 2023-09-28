@@ -66,6 +66,6 @@ router.post(
    googleAuthUser
 );
 
-router.post("/updateUser", verifyToken, updateUser);
+router.put("/updateUser", verifyToken, updateUser);
 
 export default router;

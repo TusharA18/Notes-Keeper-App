@@ -108,26 +108,24 @@ const Login = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Email</label>
                      <input
-                        className="w-full border border-gray-200 px-3 py-2 rounded-2xl focus:outline-[#4dd1bd]"
+                        className="w-full border border-gray-300 px-3 py-2 rounded-2xl focus:outline-[#4dd1bd]"
                         type="email"
                         name="email"
                         value={cred.email}
                         onChange={handleChange}
                         placeholder="Enter you Email"
-                        required
                      />
                   </div>
 
                   <div className="space-y-1">
                      <label className="ml-1">Password</label>
                      <input
-                        className="w-full border border-gray-200 px-3 py-2 rounded-2xl focus:outline-[#4dd1bd]"
+                        className="w-full border border-gray-300 px-3 py-2 rounded-2xl focus:outline-[#4dd1bd]"
                         type="password"
                         name="password"
                         value={cred.password}
                         onChange={handleChange}
                         placeholder="Enter your Password"
-                        required
                      />
                   </div>
 
@@ -135,8 +133,12 @@ const Login = () => {
                      Forgot Password?
                   </p>
 
-                  <button className="bg-[#009c84] hover:bg-[#42aa9b] transition-all px-3 py-2 h-12 rounded-2xl w-full text-white font-semibold text-lg">
-                     {loading ? <Loader /> : "Login"}
+                  <button className="bg-[#009c84] hover:bg-white hover:text-[#42aa9b] hover:outline hover:outline-2 transition-all px-3 py-2 h-12 rounded-2xl w-full text-white font-semibold text-lg group">
+                     {loading ? (
+                        <Loader addClass="group-hover:border-[#009c84] group-hover:border-b-transparent" />
+                     ) : (
+                        "Login"
+                     )}
                   </button>
 
                   <p className="w-fit mx-auto text-sm text-black">
