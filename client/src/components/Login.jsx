@@ -22,10 +22,6 @@ const Login = () => {
 
    useEffect(() => {
       document.title = "Login - Notes Keeper";
-
-      alert(
-         "This site is using a shared server, so the first login may take upto 20 seconds!"
-      );
    }, []);
 
    useEffect(() => {

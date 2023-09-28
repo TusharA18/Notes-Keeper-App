@@ -22,6 +22,12 @@ const App = () => {
    const dispatch = useDispatch();
 
    useEffect(() => {
+      alert(
+         "This site is using a shared server, so the first login may take upto 20 seconds!"
+      );
+   }, []);
+
+   useEffect(() => {
       if (sessionStorage.getItem("auth-token") && user == null) {
          const data = JSON.parse(sessionStorage.getItem("user-data"));
 
