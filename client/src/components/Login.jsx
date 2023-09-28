@@ -21,6 +21,10 @@ const Login = () => {
    const navigate = useNavigate();
 
    useEffect(() => {
+      document.title = "Login - Notes Keeper";
+   }, []);
+
+   useEffect(() => {
       if (sessionStorage.getItem("auth-token")) {
          navigate("/");
       }

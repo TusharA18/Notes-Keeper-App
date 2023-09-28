@@ -43,6 +43,10 @@ const Login = () => {
    const navigate = useNavigate();
 
    useEffect(() => {
+      document.title = "Register - Notes Keeper";
+   }, []);
+
+   useEffect(() => {
       if (sessionStorage.getItem("auth-token")) {
          navigate("/");
       }

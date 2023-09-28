@@ -41,6 +41,10 @@ const Profile = () => {
    const dispatch = useDispatch();
 
    useEffect(() => {
+      document.title = "Profile - Notes Keeper";
+   }, []);
+
+   useEffect(() => {
       if (sessionStorage.getItem("auth-token") && user == null) {
          const data = JSON.parse(sessionStorage.getItem("user-data"));
 

@@ -20,6 +20,10 @@ const Home = () => {
    const [searchText, setSearchText] = useState("");
 
    useEffect(() => {
+      document.title = "Notes Keeper";
+   }, []);
+
+   useEffect(() => {
       if (!sessionStorage.getItem("auth-token")) {
          return;
       }
