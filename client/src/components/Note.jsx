@@ -2,13 +2,10 @@ import { useContext } from "react";
 import { formatDate } from "../utils/formatDate";
 import { ModalContext } from "../context/ModalContextProvider";
 import PropTypes from "prop-types";
+import parse from "html-react-parser";
 
 const Note = ({ note }) => {
    const { setShowEditNoteModal, setModalData } = useContext(ModalContext);
-
-   const trim = (string, len) => {
-      return string.length > len ? string.substr(0, len) + "..." : string;
-   };
 
    const handleClick = () => {
       setShowEditNoteModal(true);
@@ -23,14 +20,14 @@ const Note = ({ note }) => {
       >
          <div className="overflow-hidden space-y-3">
             <h1 className="h-7 text-xl text-[#009d84] font-semibold whitespace-nowrap">
-               {note.title ? trim(note.title, 26) : "Title not available"}
+               {note.title ? note.title : "Title not available"}
             </h1>
             <hr className="bg-gray-300" />
          </div>
          <div className="overflow-hidden">
             <p className="h-24 break-words">
                {note.description
-                  ? trim(note.description, 125)
+                  ? parse(note.description.replace(/\n/g, "<br/>"))
                   : "Description not available"}
             </p>
          </div>

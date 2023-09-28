@@ -26,10 +26,7 @@ const EditModal = ({ changeFlag, setChangeFlag }) => {
    const { setShowEditNoteModal, modalData, setModalData } =
       useContext(ModalContext);
 
-   const [note, setNote] = useState({
-      title: modalData?.title || "",
-      description: modalData?.description || "",
-   });
+   const [note, setNote] = useState(modalData ?? {});
    const [updateLoading, setUpdateLoading] = useState(false);
    const [deleteLoading, setDeleteLoading] = useState(false);
    const [dataFlag, setDataFlag] = useState(true);
@@ -55,9 +52,9 @@ const EditModal = ({ changeFlag, setChangeFlag }) => {
 
       const data = await updateNote({
          note: {
-            id: modalData?._id,
-            title: modalData?.title,
-            description: modalData?.description,
+            id: note?._id,
+            title: note?.title,
+            description: note?.description,
             date: Date.now(),
          },
          token: sessionStorage.getItem("auth-token"),
@@ -73,10 +70,6 @@ const EditModal = ({ changeFlag, setChangeFlag }) => {
       toast(data.msg, { type: "success" });
 
       setModalData();
-      setNote({
-         title: modalData?.title || "",
-         description: modalData?.description || "",
-      });
       setChangeFlag(!changeFlag);
       setShowEditNoteModal(false);
       setDataFlag(true);
@@ -87,7 +80,7 @@ const EditModal = ({ changeFlag, setChangeFlag }) => {
 
       const data = await deleteNote({
          note: {
-            id: modalData?._id,
+            id: note?._id,
          },
          token: sessionStorage.getItem("auth-token"),
       });
@@ -102,10 +95,6 @@ const EditModal = ({ changeFlag, setChangeFlag }) => {
       toast(data.msg, { type: "success" });
 
       setModalData();
-      setNote({
-         title: modalData?.title || "",
-         description: modalData?.description || "",
-      });
       setChangeFlag(!changeFlag);
       setShowEditNoteModal(false);
    };
@@ -146,7 +135,7 @@ const EditModal = ({ changeFlag, setChangeFlag }) => {
                      className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-[#4dd1bd]"
                      type="text"
                      name="title"
-                     value={note.title}
+                     value={note?.title}
                      onChange={handleChange}
                      placeholder="Add a title"
                   />
@@ -160,7 +149,7 @@ const EditModal = ({ changeFlag, setChangeFlag }) => {
                      name="description"
                      id="description"
                      rows="7"
-                     value={note.description}
+                     value={note?.description}
                      onChange={handleChange}
                      placeholder="Add a description"
                   ></textarea>
@@ -170,12 +159,14 @@ const EditModal = ({ changeFlag, setChangeFlag }) => {
                <button
                   onClick={handleUpdate}
                   disabled={
-                     (note.title === "" && note.description === "") || dataFlag
+                     (note?.title === "" && note?.description === "") ||
+                     dataFlag
                         ? true
                         : false
                   }
                   className={`${
-                     (note.title === "" && note.description === "") || dataFlag
+                     (note?.title === "" && note?.description === "") ||
+                     dataFlag
                         ? "bg-[#42aa9b]"
                         : "bg-[#009c84] hover:bg-white hover:text-[#009c84] hover:outline hover:outline-2"
                   } px-5 py-2 h-11 w-24 rounded-lg text-white transition-all group`}
