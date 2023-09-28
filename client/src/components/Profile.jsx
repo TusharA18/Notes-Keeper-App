@@ -138,7 +138,7 @@ const Profile = () => {
                </div>
 
                <img
-                  className="w-56 xl:w-96 rounded-[50%]"
+                  className="w-56 h-56 xl:w-96 xl:h-96 rounded-[50%]"
                   src={
                      user && user?.photo && user?.photo?.length !== 0
                         ? user?.photo

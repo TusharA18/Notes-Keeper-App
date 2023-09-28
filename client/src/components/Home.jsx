@@ -83,7 +83,7 @@ const Home = () => {
                   <div className="flex justify-center xl:justify-end 2xl:mr-14 3xl:mr-20">
                      <motion.button
                         onClick={() => setShowAddNoteModal(true)}
-                        className="text-white bg-[#009c84] hover:bg-white hover:text-[#009c8d] hover:outline transition-all px-5 py-2 rounded-xl"
+                        className="text-white bg-[#009c84] hover:bg-white hover:text-[#009c8d] hover:outline transition-all px-5 py-2 mt-5 lg:mt-0 rounded-xl"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                      >
@@ -94,7 +94,7 @@ const Home = () => {
                      {loading ? (
                         <Loader addClass="mx-auto my-32 w-32 h-32 border-[#009c84] border-b-transparent" />
                      ) : notes.length === 0 ? (
-                        <div className="text-2xl ml-10">
+                        <div className="text-2xl pt-10">
                            No notes to display...
                         </div>
                      ) : (
