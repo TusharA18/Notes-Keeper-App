@@ -103,10 +103,23 @@ const Login = () => {
             <div className="hidden lg:block">
                <img src="/images/login-page.avif" alt="" />
             </div>
-            <div className="md:px-20 py-10 space-y-8">
+            <div className="md:px-20 py-10 space-y-5">
                <div className="space-y-3">
                   <h1 className="text-4xl font-semibold">Welcome!</h1>
                   <p className="text-[16px]">Please login to continue...</p>
+               </div>
+               <div className="space-y-2">
+                  <hr />
+                  <h1 className="text-lg font-bold">Demo Account</h1>
+                  <div>
+                     <p>
+                        <b>Email :</b> test1@test.com
+                     </p>
+                     <p>
+                        <b>Password :</b> Test@123
+                     </p>
+                  </div>
+                  <hr />
                </div>
                <form className="space-y-4 w-80" onSubmit={handleSubmit}>
                   <div className="space-y-1">

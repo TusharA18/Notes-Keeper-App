@@ -107,8 +107,12 @@ const Home = () => {
                            })
                            .filter(
                               (note) =>
-                                 note.title.includes(searchText) ||
-                                 note.description.includes(searchText)
+                                 note.title
+                                    .toLowerCase()
+                                    .includes(searchText.toLowerCase()) ||
+                                 note.description
+                                    .toLowerCase()
+                                    .includes(searchText.toLowerCase())
                            )
                            .map((note) => <Note key={note._id} note={note} />)
                      )}
