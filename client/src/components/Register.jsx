@@ -118,7 +118,11 @@ const Login = () => {
          photo: decode.picture,
       };
 
+      setLoading(true);
+
       const data = await googleAuth(payload);
+
+      setLoading(false);
 
       if (!data.success) {
          handleError(data.errors);

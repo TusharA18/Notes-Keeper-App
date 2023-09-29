@@ -14,11 +14,22 @@ import { login } from "../features/account/accountSlice";
 const Login = () => {
    const [cred, setCred] = useState({ email: "", password: "" });
 
-   const { loading, setLoading } = useContext(LoaderContext);
+   const { loading, setLoading, alertMessage, setAlertMessage } =
+      useContext(LoaderContext);
 
    const dispatch = useDispatch();
 
    const navigate = useNavigate();
+
+   useEffect(() => {
+      if (!alertMessage) {
+         alert(
+            "This site is using a shared server, so the first login may take upto 20 seconds!"
+         );
+      }
+
+      setAlertMessage(true);
+   }, []); // eslint-disable-line
 
    useEffect(() => {
       document.title = "Login - Notes Keeper";
@@ -77,8 +88,11 @@ const Login = () => {
          sub: decode.sub,
          photo: decode.picture,
       };
+      setLoading(true);
 
       const data = await googleAuth(payload);
+
+      setLoading(false);
 
       if (!data.success) {
          handleError(data.errors);

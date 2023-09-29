@@ -5,9 +5,12 @@ export const LoaderContext = createContext();
 
 const LoaderProvider = ({ children }) => {
    const [loading, setLoading] = useState(false);
+   const [alertMessage, setAlertMessage] = useState(false);
 
    return (
-      <LoaderContext.Provider value={{ loading, setLoading }}>
+      <LoaderContext.Provider
+         value={{ loading, setLoading, alertMessage, setAlertMessage }}
+      >
          {children}
       </LoaderContext.Provider>
    );
