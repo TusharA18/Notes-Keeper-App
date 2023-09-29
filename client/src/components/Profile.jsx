@@ -210,7 +210,7 @@ const Profile = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Picture</label>
                      <input
-                        className="fileInput w-full border border-gray-200 rounded-lg p-1"
+                        className="fileInput w-full border border-gray-200 rounded-lg file:px-2 file:py-1 file:rounded-lg file:border-none"
                         type="file"
                         name="photo"
                         onChange={handlePhotoUpload}
