@@ -163,7 +163,6 @@ const Login = () => {
                   <p className="w-fit ml-auto text-sm text-[#009c8d] hover:underline hover:underline-offset-2 cursor-pointer">
                      Forgot Password?
                   </p>
-
                   <button className="bg-[#009c84] hover:bg-white hover:text-[#42aa9b] hover:outline hover:outline-2 transition-all px-3 py-2 h-12 rounded-2xl w-full text-white font-semibold text-lg group">
                      {loading ? (
                         <Loader addClass="group-hover:border-[#009c84] group-hover:border-b-transparent" />
@@ -173,7 +172,7 @@ const Login = () => {
                   </button>
 
                   <p className="w-fit mx-auto text-sm text-black">
-                     {"Doesn't"} have an account?{" "}
+                     {"Don't"} have an account?{" "}
                      <Link to="/register">
                         <span className="text-[#009c8d] hover:underline hover:underline-offset-2 cursor-pointer">
                            {" "}

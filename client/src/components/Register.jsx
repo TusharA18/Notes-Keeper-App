@@ -212,7 +212,7 @@ const Login = () => {
                   <div className="space-y-1">
                      <label className="ml-1">Picture</label>
                      <input
-                        className="w-full border border-gray-300 rounded-lg file:p-2 file:rounded-lg file:border-none"
+                        className="w-full border border-gray-300 rounded-lg file:p-2 file:rounded-lg file:border-none cursor-pointer"
                         type="file"
                         name="photo"
                         onChange={handlePhotoUpload}
